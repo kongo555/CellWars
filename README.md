@@ -5,4 +5,4 @@ Technology used: libgdx, kryonet, mariadb
 
 Preview
 -------
-![preview](https://github.com/kongo555/CellWars/tree/master/core/assets/cellwars.gif)
+![preview](core/assets/cellwars.gif)
