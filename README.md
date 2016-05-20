@@ -9,4 +9,4 @@ Technology used:
 
 Preview
 -------
-![preview](core/assets/cellwars.gif)
+![preview](core/assets/preview.gif)
