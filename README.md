@@ -3,9 +3,9 @@ CellWars
 Clone of agro.io in java.
 
 Technology used: 
--libgdx (game-development application framework).
--kryonet (networking).
--mariadb (database).
+* LibGDX (game-development application framework).
+* KryoNet (networking).
+* MariaDB (database).
 
 Preview
 -------
