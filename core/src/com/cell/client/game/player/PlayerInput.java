@@ -26,7 +26,7 @@ public class PlayerInput extends InputAdapter {
     private Cell cell;
 
 
-    public PlayerInput(GameClient client, ChatController chatController, Cell cell){
+    public PlayerInput(GameClient client, ChatController chatController, Cell cell) {
         this.client = client;
         this.chatController = chatController;
         this.cell = cell;
@@ -45,7 +45,7 @@ public class PlayerInput extends InputAdapter {
             send = true;
         }
 
-        if (up){
+        if (up) {
             vertical = delta;
             send = true;
         } else if (down) {
@@ -53,7 +53,7 @@ public class PlayerInput extends InputAdapter {
             send = true;
         }
 
-        if(!send)
+        if (!send)
             return;
 
         input = new InputPackage(horizontal, vertical);
@@ -75,8 +75,7 @@ public class PlayerInput extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-        switch (keycode)
-        {
+        switch (keycode) {
             case Input.Keys.LEFT:
                 left = true;
                 break;
@@ -94,10 +93,8 @@ public class PlayerInput extends InputAdapter {
     }
 
     @Override
-    public boolean keyUp(int keycode)
-    {
-        switch (keycode)
-        {
+    public boolean keyUp(int keycode) {
+        switch (keycode) {
             case Input.Keys.LEFT:
                 left = false;
                 break;

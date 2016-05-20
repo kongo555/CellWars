@@ -8,7 +8,8 @@ public class PlayerState {
     public float y;
     public int last_processed_input;
 
-    public PlayerState(){}
+    public PlayerState() {
+    }
 
     public PlayerState(float x, float y, int last_processed_input) {
         this.x = x;

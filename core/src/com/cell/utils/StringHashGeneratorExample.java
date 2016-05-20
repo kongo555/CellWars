@@ -33,29 +33,31 @@ public class StringHashGeneratorExample {
             byte[] passBytes = passWithSalt.getBytes();
             byte[] passHash = sha256.digest(passBytes);
             StringBuilder sb = new StringBuilder();
-            for(int i=0; i< passHash.length ;i++) {
+            for (int i = 0; i < passHash.length; i++) {
                 sb.append(Integer.toString((passHash[i] & 0xff) + 0x100, 16).substring(1));
             }
             String generatedPassword = sb.toString();
             return generatedPassword;
-        } catch (NoSuchAlgorithmException e) { e.printStackTrace(); }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     public static String sha256(String base) {
-        try{
+        try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(base.getBytes("UTF-8"));
             StringBuffer hexString = new StringBuffer();
 
             for (int i = 0; i < hash.length; i++) {
                 String hex = Integer.toHexString(0xff & hash[i]);
-                if(hex.length() == 1) hexString.append('0');
+                if (hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
             }
 
             return hexString.toString();
-        } catch(Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }

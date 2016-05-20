@@ -7,6 +7,7 @@ public class HashGenerationException extends Exception {
     public HashGenerationException(String s) {
         super(s);
     }
+
     public HashGenerationException(String s, Exception ex) {
         super(s, ex);
     }

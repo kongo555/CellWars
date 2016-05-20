@@ -1,7 +1,6 @@
 package com.cell.client.game.chat;
 
 import com.badlogic.gdx.Gdx;
-import com.cell.client.Main;
 
 /**
  * Created by kongo on 17.03.16.
@@ -13,7 +12,7 @@ public class ChatController {
         this.chatWindow = chatWindow;
     }
 
-    public void addMessage (final String message) {
+    public void addMessage(final String message) {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
@@ -22,7 +21,7 @@ public class ChatController {
         });
     }
 
-    public void sendMessage(){
+    public void sendMessage() {
         chatWindow.sendMessage();
     }
 }

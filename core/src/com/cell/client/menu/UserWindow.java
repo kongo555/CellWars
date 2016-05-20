@@ -3,7 +3,6 @@ package com.cell.client.menu;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.cell.client.GameClient;
-import com.cell.client.Main;
 import com.kotcrab.vis.ui.util.TableUtils;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
@@ -35,7 +34,7 @@ public class UserWindow extends VisWindow {
 
         startGameButton.addListener(new ChangeListener() {
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) {
                 gameClient.enterRoom();
                 menuScreen.openWaitingWindow();
             }
@@ -43,7 +42,7 @@ public class UserWindow extends VisWindow {
 
         editButton.addListener(new ChangeListener() {
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) {
                 gameClient.sendUserInfoRequest();
             }
         });

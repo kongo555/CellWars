@@ -14,7 +14,7 @@ import com.kotcrab.vis.ui.widget.*;
 public class RegisterForm extends VisWindow {
     private final MenuScreen menuScreen;
 
-    public RegisterForm (final MenuScreen menuScreen, final GameClient gameClient) {
+    public RegisterForm(final MenuScreen menuScreen, final GameClient gameClient) {
         super("Register");
         this.menuScreen = menuScreen;
 
@@ -62,7 +62,7 @@ public class RegisterForm extends VisWindow {
 
         acceptButton.addListener(new ChangeListener() {
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) {
                 gameClient.register(nameField.getText(), passwordField.getText(), emailField.getText());
                 menuScreen.openWaitingWindow();
             }
@@ -74,7 +74,7 @@ public class RegisterForm extends VisWindow {
     }
 
     @Override
-    protected void close () {
+    protected void close() {
         super.close();
         menuScreen.openMainMenu();
     }

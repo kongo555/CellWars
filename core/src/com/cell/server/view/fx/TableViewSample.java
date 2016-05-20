@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -18,7 +17,6 @@ import javafx.stage.Stage;
 
 public class TableViewSample extends Application {
 
-    private TableView<Person> table = new TableView<Person>();
     private final ObservableList<Person> data =
             FXCollections.observableArrayList(
                     new Person("Jacob", "Smith", "jacob.smith@example.com"),
@@ -27,6 +25,7 @@ public class TableViewSample extends Application {
                     new Person("Emma", "Jones", "emma.jones@example.com"),
                     new Person("Michael", "Brown", "michael.brown@example.com")
             );
+    private TableView<Person> table = new TableView<Person>();
 
     public static void main(String[] args) {
         launch(args);

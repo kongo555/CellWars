@@ -9,18 +9,18 @@ import com.badlogic.gdx.math.Vector3;
  * Created by kongo on 06.04.16.
  */
 public class CameraContoller {
+    float viewWidth;
+    float viewHeight;
     private OrthographicCamera camera;
     private float lerp = 0.05f;// 0,1
     private Rectangle viewBounds;
-    float viewWidth;
-    float viewHeight;
 
-    public CameraContoller(OrthographicCamera camera){
+    public CameraContoller(OrthographicCamera camera) {
         this.camera = camera;
         viewBounds = new Rectangle();
     }
 
-    public void update(Vector2 newPosition){
+    public void update(Vector2 newPosition) {
         Vector3 position = camera.position;
         position.x += (newPosition.x - position.x) * lerp;
         position.y += (newPosition.y - position.y) * lerp;

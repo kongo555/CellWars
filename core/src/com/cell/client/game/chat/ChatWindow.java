@@ -1,14 +1,8 @@
 package com.cell.client.game.chat;
 
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.cell.network.Network;
 import com.cell.network.chat.ChatMessage;
 import com.esotericsoftware.kryonet.Client;
 import com.kotcrab.vis.ui.widget.*;
-
-import java.util.HashSet;
 
 /**
  * Created by kongo on 17.03.16.
@@ -40,14 +34,14 @@ public class ChatWindow extends VisWindow {
         bottom().left();
     }
 
-    public void addMessage(final String message){
+    public void addMessage(final String message) {
         messageTable.add(new VisLabel(message));
         messageTable.row();
         layout();
         messageScrollPane.setScrollY(messageScrollPane.getMaxY());
     }
 
-    public void sendMessage(){
+    public void sendMessage() {
         messageTextField.focusField();
         String message = messageTextField.getText();
         messageTextField.setText("");
@@ -62,7 +56,7 @@ public class ChatWindow extends VisWindow {
     }
 
     public void resize(int width, int height) {
-        setPosition(0,0);
+        setPosition(0, 0);
     }
 }
 

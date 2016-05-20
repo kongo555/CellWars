@@ -26,15 +26,13 @@ import java.util.ArrayList;
  * Created by kongo on 17.03.16.
  */
 public class GameScreen implements Screen {
+    private final Main main;
+    private final GameClient gameClient;
+    private final ChatWindow chatWindow;
     private ShapeRenderer shapeRenderer;
     private OrthographicCamera camera;
     private CameraContoller cameraContoller;
-
-    private final Main main;
-    private final GameClient gameClient;
     private Stage stage;
-    private final ChatWindow chatWindow;
-
     private Cell cell;
     private PlayerInput playerInput;
     private ArrayList<Cell> entities;
@@ -45,7 +43,7 @@ public class GameScreen implements Screen {
     private int worldHeight;
 
 
-    public GameScreen(Main main, GameClient gameClient, ChatWindow chatWindow, ChatController chatController){
+    public GameScreen(Main main, GameClient gameClient, ChatWindow chatWindow, ChatController chatController) {
         this.main = main;
         this.gameClient = gameClient;
         this.chatWindow = chatWindow;
@@ -55,7 +53,7 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cameraContoller = new CameraContoller(camera);
 
-        cell = new Cell(0,0, Room.startCellSize, 0);
+        cell = new Cell(0, 0, Room.startCellSize, 0);
         playerInput = new PlayerInput(gameClient, chatController, cell);
         entities = new ArrayList<Cell>(1000);
     }
@@ -72,7 +70,7 @@ public class GameScreen implements Screen {
         initGUI();
     }
 
-    private void initGUI(){
+    private void initGUI() {
         Table rootTable = new Table();
         rootTable.setFillParent(true);
         stage.addActor(chatWindow);
@@ -80,7 +78,7 @@ public class GameScreen implements Screen {
         //rootTable.add(chatWindow).bottom().left();
     }
 
-    public void update(float delta){
+    public void update(float delta) {
         playerInput.processInputs(delta);
         cameraContoller.update(new Vector2(cell.getX(), cell.getY()));
     }
@@ -98,8 +96,8 @@ public class GameScreen implements Screen {
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         ArrayList<Cell> entitiesToRender = new ArrayList<Cell>(entities);
-        for(Cell cell : entitiesToRender) {
-            if(cell != this.cell)
+        for (Cell cell : entitiesToRender) {
+            if (cell != this.cell)
                 cell.render(shapeRenderer);
         }
         cell.render(shapeRenderer);
@@ -109,7 +107,7 @@ public class GameScreen implements Screen {
         stage.draw();
     }
 
-    private void drawGrid(ShapeRenderer shapeRenderer){
+    private void drawGrid(ShapeRenderer shapeRenderer) {
         Rectangle viewBounds = cameraContoller.getViewBounds();
 //        final int xMin = Math.max(0, (int) (viewBounds.x / gridSize));
 //        final int xMax = Math.min(worldWidth / gridSize + 1, (int) ((viewBounds.x + viewBounds.width + gridSize) / gridSize));
@@ -134,7 +132,7 @@ public class GameScreen implements Screen {
                 shapeRenderer.setColor(Color.BLACK);*/
 
             shapeRenderer.line(x, (yMin - 1) * gridSize, x, yMax * gridSize);
-            x+=gridSize;
+            x += gridSize;
         }
         int y = yMin * gridSize;
         for (int i = yMin; i < yMax; i++) {
@@ -142,8 +140,8 @@ public class GameScreen implements Screen {
                 shapeRenderer.setColor(Color.PURPLE);
             else
                 shapeRenderer.setColor(Color.BLACK);*/
-            shapeRenderer.line((xMin  -1) * gridSize, y, xMax * gridSize, y);
-            y+=gridSize;
+            shapeRenderer.line((xMin - 1) * gridSize, y, xMax * gridSize, y);
+            y += gridSize;
         }
         shapeRenderer.end();
     }

@@ -4,8 +4,8 @@ import java.security.MessageDigest;
 
 /**
  * Hash functions utility class.
- * @author www.codejava.net
  *
+ * @author www.codejava.net
  */
 public class SecurityUtils {
     public static String generateMD5(String message) throws HashGenerationException {

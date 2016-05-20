@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class DataBasePopulating {
     public Connection connection = null;
 
-    public DataBasePopulating(){
+    public DataBasePopulating() {
         String url = "jdbc:mysql://localhost:3306/cellwars";
         String user = "testuser";
         String password = "test623";
@@ -30,12 +30,35 @@ public class DataBasePopulating {
         }
     }
 
-    public void populateUsers(int n){
+    public static void main(String[] args) {
+        DataBasePopulating dataBasePopulating = new DataBasePopulating();
+        ////    user    ////
+        //dataBasePopulating.populateUsers(50);
+        //dataBasePopulating.getUsers();
+        //dataBasePopulating.getLastUserID();
+
+        ////    items    ////
+        //dataBasePopulating.getItems(1);
+        //System.out.println();
+        //dataBasePopulating.getItems(2);
+        dataBasePopulating.giveFreeItems();
+
+
+        if (dataBasePopulating.connection != null) {
+            try {
+                dataBasePopulating.connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void populateUsers(int n) {
         NameGenerator nameGenerator = null;
         try {
             nameGenerator = new NameGenerator("names.txt");
             for (int i = 0; i < n; i++) {
-                register(nameGenerator.compose(MathUtils.random(1)+2));
+                register(nameGenerator.compose(MathUtils.random(1) + 2));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,12 +67,12 @@ public class DataBasePopulating {
         getUsers();
     }
 
-    public void register(String name){
+    public void register(String name) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
-            String sql="INSERT INTO User (name, password, email, score) VALUES (?,?,?,?);";
+            String sql = "INSERT INTO User (name, password, email, score) VALUES (?,?,?,?);";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, name);
             String password = null;
@@ -95,7 +118,7 @@ public class DataBasePopulating {
         }
     }
 
-    public int getLastUserID(){
+    public int getLastUserID() {
         PreparedStatement pst = null;
         ResultSet rs = null;
 
@@ -124,9 +147,9 @@ public class DataBasePopulating {
         ResultSet rs = null;
 
         try {
-            if(category == 1)
+            if (category == 1)
                 pst = connection.prepareStatement("SELECT name, scoreNeeded FROM Item where idCategory=?");
-            else if(category == 2)
+            else if (category == 2)
                 pst = connection.prepareStatement("SELECT name, price FROM Item where idCategory=?");
             else
                 return;
@@ -148,12 +171,12 @@ public class DataBasePopulating {
         }
     }
 
-    public void addItem(int idPlayer, int idItem){
+    public void addItem(int idPlayer, int idItem) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
-            String sql="INSERT INTO Transaction (idPlayer, idItem) VALUES (?,?);";
+            String sql = "INSERT INTO Transaction (idPlayer, idItem) VALUES (?,?);";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, idPlayer);
             preparedStatement.setInt(2, idItem);
@@ -164,7 +187,7 @@ public class DataBasePopulating {
         }
     }
 
-    public void giveFreeItems(){
+    public void giveFreeItems() {
         PreparedStatement pst = null;
         ResultSet rs = null;
         ArrayList<Integer> itemId = new ArrayList<Integer>();
@@ -194,7 +217,7 @@ public class DataBasePopulating {
                 int id = rs.getInt(1);
                 int score = rs.getInt(2);
                 for (int i = 0; i < scoreNeeded.size(); i++) {
-                    if(score > scoreNeeded.get(i))
+                    if (score > scoreNeeded.get(i))
                         addItem(id, itemId.get(i));
                 }
             }
@@ -203,30 +226,6 @@ public class DataBasePopulating {
             Logger lgr = Logger.getLogger("giveFreeItems");
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
 
-        }
-    }
-
-    public static void main(String[] args){
-        DataBasePopulating dataBasePopulating = new DataBasePopulating();
-        ////    user    ////
-        //dataBasePopulating.populateUsers(50);
-        //dataBasePopulating.getUsers();
-        //dataBasePopulating.getLastUserID();
-
-        ////    items    ////
-        //dataBasePopulating.getItems(1);
-        //System.out.println();
-        //dataBasePopulating.getItems(2);
-        dataBasePopulating.giveFreeItems();
-
-
-
-        if (dataBasePopulating.connection != null) {
-            try {
-                dataBasePopulating.connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

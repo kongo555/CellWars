@@ -9,7 +9,7 @@ public class ColumnDescription {
     public String name;
     public List list;
 
-    public ColumnDescription(String name, List list){
+    public ColumnDescription(String name, List list) {
         this.name = name;
         this.list = list;
     }

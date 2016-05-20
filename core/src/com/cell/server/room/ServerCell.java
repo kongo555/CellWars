@@ -24,7 +24,7 @@ public class ServerCell extends Cell {
     }
 
     @Override
-    public void applyInput(InputPackage input){
+    public void applyInput(InputPackage input) {
         super.applyInput(input);
         viewBounds.set(x - viewWidth / 2, y - viewHeight / 2, viewWidth, viewHeight);
     }
@@ -41,7 +41,7 @@ public class ServerCell extends Cell {
         this.lastProcessedInput = lastProcessedInput;
     }
 
-    public Rectangle getViewBounds(){
+    public Rectangle getViewBounds() {
         return viewBounds;
     }
 }

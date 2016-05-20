@@ -26,19 +26,19 @@ import java.util.Map;
 /**
  * Created by kongo on 17.03.16.
  */
-public class GameServer extends Listener{
+public class GameServer extends Listener {
     private final Server server;
     private final HashMap<String, UserSession> loggedIn = new HashMap<String, UserSession>();
     private final Main main;
     private final DataBase dataBase;
     private Room room;
 
-    public GameServer (final Main main, final DataBase dataBase, final Room room) throws IOException {
+    public GameServer(final Main main, final DataBase dataBase, final Room room) throws IOException {
         this.main = main;
         this.dataBase = dataBase;
         this.room = room;
         server = new Server() {
-            protected Connection newConnection () {
+            protected Connection newConnection() {
                 return new GameConnection();
             }
         };
@@ -64,25 +64,25 @@ public class GameServer extends Listener{
         server.sendToAllExceptTCP(gameConnection.getID(), chatMessage);
     }
 
-    public void received (Connection connection, Object object) {
-        GameConnection gameConnection = (GameConnection)connection;
+    public void received(Connection connection, Object object) {
+        GameConnection gameConnection = (GameConnection) connection;
 
-        if(object instanceof InputPackage){
+        if (object instanceof InputPackage) {
             if (gameConnection.name == null)
                 return;
 
-            InputPackage inputPackage = (InputPackage)object;
+            InputPackage inputPackage = (InputPackage) object;
             if (validateInput(inputPackage)) {
                 ServerCell entity = room.getEntities().get(connection.getID());
                 entity.applyInput(inputPackage);
-                if(entity.getX() > room.getWorldWidth())
+                if (entity.getX() > room.getWorldWidth())
                     entity.setX(room.getWorldWidth());
-                else if(entity.getX() <0)
+                else if (entity.getX() < 0)
                     entity.setX(0);
 
-                if(entity.getY() > room.getWorldHeight())
+                if (entity.getY() > room.getWorldHeight())
                     entity.setY(room.getWorldHeight());
-                else if(entity.getY() < 0)
+                else if (entity.getY() < 0)
                     entity.setY(0);
 
 
@@ -97,7 +97,7 @@ public class GameServer extends Listener{
             // Ignore the object if a client tries to chat before registering a name.
             if (gameConnection.name == null)
                 return;
-            ChatMessage chatMessage = (ChatMessage)object;
+            ChatMessage chatMessage = (ChatMessage) object;
             // Ignore the object if the chat message is invalid.
             String message = chatMessage.text;
             if (message == null) return;
@@ -109,15 +109,15 @@ public class GameServer extends Listener{
             return;
         }
 
-        if(object instanceof AddPlayer){
+        if (object instanceof AddPlayer) {
             if (gameConnection.name == null)
                 return;
-            if(room == null) {
+            if (room == null) {
                 room = new Room(this);
                 main.setRoom(room);
             }
             //todo random position and color
-            ServerCell entity = new ServerCell(gameConnection,50,50,-1, Room.startCellSize, 0);
+            ServerCell entity = new ServerCell(gameConnection, 50, 50, -1, Room.startCellSize, 0);
             room.getEntities().put(connection.getID(), entity);
 
             connection.sendTCP(new WorldInfo(room.getWorldWidth(), room.getWorldHeight()));
@@ -125,7 +125,7 @@ public class GameServer extends Listener{
             return;
         }
 
-        if(object instanceof RemovePlayer){
+        if (object instanceof RemovePlayer) {
             if (gameConnection.name == null)
                 return;
             room.getEntities().remove(connection.getID());
@@ -137,18 +137,18 @@ public class GameServer extends Listener{
             // Ignore the object if a client has already registered a name.
             if (gameConnection.name != null) return;
             // Ignore the object if the name is invalid.
-            String name = ((LoginRequest)object).name;
+            String name = ((LoginRequest) object).name;
             if (name == null) return;
             name = name.trim();
             if (name.length() == 0) return;
 
-            if(checkIfLogged(name)){
+            if (checkIfLogged(name)) {
                 connection.sendTCP(new LoginFailure());
                 return;
             }
 
             // Ignore the object if the password is invalid.
-            String password = ((LoginRequest)object).password;
+            String password = ((LoginRequest) object).password;
             if (password == null) return;
             password = password.trim();
             if (password.length() == 0) return;
@@ -169,17 +169,17 @@ public class GameServer extends Listener{
             // Ignore the object if a client has already registered a name.
             if (gameConnection.name != null) return;
             // Ignore the object if the name is invalid.
-            String name = ((RegisterRequest)object).name;
+            String name = ((RegisterRequest) object).name;
             if (name == null) return;
             name = name.trim();
             if (name.length() == 0) return;
 
-            String password = ((RegisterRequest)object).password;
+            String password = ((RegisterRequest) object).password;
             if (password == null) return;
             password = password.trim();
 
             if (password.length() == 0) return;
-            String email = ((RegisterRequest)object).email;
+            String email = ((RegisterRequest) object).email;
             if (email == null) return;
             email = email.trim();
             if (email.length() == 0) return;
@@ -198,7 +198,7 @@ public class GameServer extends Listener{
                 return;
             UserInfo userInfo;
             userInfo = dataBase.getUserInfo(loggedIn.get(gameConnection.name).id);
-            if(userInfo == null){
+            if (userInfo == null) {
                 System.out.println("userinfo bug");
             }
 
@@ -219,8 +219,8 @@ public class GameServer extends Listener{
         }
     }
 
-    public void disconnected (Connection c) {
-        GameConnection connection = (GameConnection)c;
+    public void disconnected(Connection c) {
+        GameConnection connection = (GameConnection) c;
         if (connection.name != null) {
             loggedIn.remove(connection.name);
 
@@ -233,33 +233,27 @@ public class GameServer extends Listener{
         }
     }
 
-    private boolean checkIfLogged(String name){
-        if (loggedIn.containsKey(name))
-            return true;
-        else
-            return false;
+    private boolean checkIfLogged(String name) {
+        return loggedIn.containsKey(name);
     }
 
     public boolean validateInput(InputPackage input) {
-        if (Math.abs(input.pressTimeVertical) > 0.03) {
-            return false;
-        }
-        return true;
+        return Math.abs(input.pressTimeVertical) <= 0.03;
     }
 
-    public void removePlayer(ServerCell entity){
+    public void removePlayer(ServerCell entity) {
         //room.getEntities().remove(entity.getConnection().getID());
         entity.getConnection().sendTCP(new GameOver());
     }
 
 
-    public void sendToAllEntitiesTCP(Object object){
+    public void sendToAllEntitiesTCP(Object object) {
         for (Map.Entry<Integer, ServerCell> entry : room.getEntities().entrySet()) {
             entry.getValue().getConnection().sendTCP(object);
         }
     }
 
-    public void dispose(){
+    public void dispose() {
         server.stop();
     }
 }

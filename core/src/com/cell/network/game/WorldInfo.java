@@ -7,7 +7,8 @@ public class WorldInfo {
     public int width;
     public int height;
 
-    public WorldInfo(){}
+    public WorldInfo() {
+    }
 
     public WorldInfo(int width, int height) {
         this.width = width;

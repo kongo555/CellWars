@@ -3,7 +3,6 @@ package com.cell.client.menu;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.cell.network.Network;
 import com.cell.client.GameClient;
 import com.cell.network.user.UserInfo;
 import com.kotcrab.vis.ui.util.TableUtils;
@@ -16,7 +15,7 @@ import com.kotcrab.vis.ui.widget.*;
 public class EditForm extends VisWindow {
     private MenuScreen menuScreen;
 
-    public EditForm (final MenuScreen menuScreen, final GameClient gameClient, UserInfo userInfo) {
+    public EditForm(final MenuScreen menuScreen, final GameClient gameClient, UserInfo userInfo) {
         super("Edit");
         this.menuScreen = menuScreen;
 
@@ -66,7 +65,7 @@ public class EditForm extends VisWindow {
 
         acceptButton.addListener(new ChangeListener() {
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) {
                 gameClient.sendUpadateUser(nameField.getText(), passwordField.getText(), emailField.getText());
                 menuScreen.openWaitingWindow();
             }
@@ -78,7 +77,7 @@ public class EditForm extends VisWindow {
     }
 
     @Override
-    protected void close () {
+    protected void close() {
         super.close();
         menuScreen.openUserWindow();
     }

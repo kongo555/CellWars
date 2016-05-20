@@ -7,7 +7,8 @@ public class WorldState {
     private PlayerState playerState;
     private EntityState[] states;
 
-    public WorldState(){}
+    public WorldState() {
+    }
 
 
     public WorldState(PlayerState playerState, EntityState[] states) {

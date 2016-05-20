@@ -2,15 +2,18 @@ package com.cell.server.view;
 
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.cell.server.database.DataBase;
-import com.kotcrab.vis.ui.widget.*;
+import com.kotcrab.vis.ui.widget.VisLabel;
+import com.kotcrab.vis.ui.widget.VisScrollPane;
+import com.kotcrab.vis.ui.widget.VisTable;
+import com.kotcrab.vis.ui.widget.VisWindow;
 
 /**
  * Created by kongo on 14.04.16.
  */
 public class StatsWindow extends VisWindow {
     private final ServerView serverView;
-    
-    
+
+
     //// TODO: 04.05.16 wszystko
     public StatsWindow(final ServerView serverView, DataBase dataBase) {
         super("Stats");
@@ -45,7 +48,7 @@ public class StatsWindow extends VisWindow {
         //setFillParent(true);
     }
 
-    private VisTable getStatsTable(DataBase dataBase){
+    private VisTable getStatsTable(DataBase dataBase) {
         VisTable table = new VisTable();
         /*for (String text : dataBase.getStats()) {
             String word[] = text.split(" ");
@@ -56,7 +59,7 @@ public class StatsWindow extends VisWindow {
     }
 
     @Override
-    protected void close () {
+    protected void close() {
         super.close();
         serverView.openOptionsWindow();
     }

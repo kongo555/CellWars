@@ -1,8 +1,5 @@
 package com.cell.server.view.fx;
 
-import java.util.Arrays;
-import java.util.List;
-
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -12,7 +9,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class TableViewByColumns extends Application {
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -41,9 +45,5 @@ public class TableViewByColumns extends Application {
 
         primaryStage.setScene(new Scene(new BorderPane(table), 600, 600));
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

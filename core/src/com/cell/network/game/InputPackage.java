@@ -8,7 +8,7 @@ public class InputPackage {
     public float pressTimeVertical;
     public int input_sequence_number;
 
-    public InputPackage(){
+    public InputPackage() {
     }
 
     public InputPackage(float pressTimeHorizontal, float pressTimeVertical) {

@@ -2,9 +2,10 @@ package com.cell.client.menu;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.cell.client.GameClient;
 import com.kotcrab.vis.ui.util.TableUtils;
-import com.kotcrab.vis.ui.widget.*;
+import com.kotcrab.vis.ui.widget.VisTable;
+import com.kotcrab.vis.ui.widget.VisTextButton;
+import com.kotcrab.vis.ui.widget.VisWindow;
 
 
 /**
@@ -33,15 +34,15 @@ public class MenuWindow extends VisWindow {
 
         loginButton.addListener(new ChangeListener() {
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) {
                 menuScreen.openLoginForm();
             }
         });
 
         registerButton.addListener(new ChangeListener() {
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                 menuScreen.openRegisterForm();
+            public void changed(ChangeEvent event, Actor actor) {
+                menuScreen.openRegisterForm();
             }
         });
 

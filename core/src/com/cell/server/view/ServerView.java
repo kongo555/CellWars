@@ -15,7 +15,7 @@ public class ServerView {
     private Table rootTable;
     private DataBase dataBase;
 
-    public ServerView(DataBase dataBase){
+    public ServerView(DataBase dataBase) {
         this.dataBase = dataBase;
 
         stage = new Stage(new ScreenViewport());
@@ -29,7 +29,7 @@ public class ServerView {
         openOptionsWindow();
     }
 
-    public void render(){
+    public void render() {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -37,13 +37,13 @@ public class ServerView {
         stage.draw();
     }
 
-    public void openOptionsWindow(){
+    public void openOptionsWindow() {
         rootTable.clearChildren();
         OptionsWindow optionsWindow = new OptionsWindow(this);
         rootTable.add(optionsWindow);
     }
 
-    public void openStatsWindow(){
+    public void openStatsWindow() {
         rootTable.clearChildren();
         rootTable.add(new StatsWindow(this, dataBase)).width(300).fill().expand();
     }

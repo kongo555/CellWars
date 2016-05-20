@@ -21,12 +21,12 @@ public class Main extends ApplicationAdapter {
 
 
     @Override
-    public void create () {
+    public void create() {
         VisUI.load();
 
         dataBase = new DataBase();
         try {
-            gameServer= new GameServer(this, dataBase, room);
+            gameServer = new GameServer(this, dataBase, room);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -34,36 +34,36 @@ public class Main extends ApplicationAdapter {
         serverView = new ServerView(dataBase);
     }
 
-    private void update(){
-        if(room != null)
+    private void update() {
+        if (room != null)
             room.sendWorldState();
     }
 
 
     @Override
-    public void render () {
+    public void render() {
         //update();
-        if(room != null)
+        if (room != null)
             room.update(Gdx.graphics.getDeltaTime());
 
         serverView.render();
     }
 
     @Override
-    public void resize (int width, int height) {
+    public void resize(int width, int height) {
         serverView.resize(width, height);
     }
 
     @Override
-    public void pause () {
+    public void pause() {
     }
 
     @Override
-    public void resume () {
+    public void resume() {
     }
 
     @Override
-    public void dispose () {
+    public void dispose() {
         dataBase.dispose();
         gameServer.dispose();
     }

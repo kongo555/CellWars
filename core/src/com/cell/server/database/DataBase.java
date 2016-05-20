@@ -28,22 +28,21 @@ public class DataBase {
         }
     }
 
-    public int login(String name, String password){
+    public int login(String name, String password) {
         int result = -1;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
-            String sql="SELECT idPlayer, Name, Password FROM User where name=? and password=?";
+            String sql = "SELECT idPlayer, Name, Password FROM User where name=? and password=?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 System.out.println("found " + resultSet.getString(1));
                 result = resultSet.getInt("idPlayer");
-            }
-            else{
+            } else {
                 System.out.println("nope");
             }
 
@@ -69,13 +68,13 @@ public class DataBase {
         return result;
     }
 
-    public boolean register(String name, String password, String email){
+    public boolean register(String name, String password, String email) {
         boolean result = false;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
-            String sql="INSERT INTO User (name, password, email) VALUES (?,?,?);";
+            String sql = "INSERT INTO User (name, password, email) VALUES (?,?,?);";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
@@ -105,24 +104,23 @@ public class DataBase {
         return result;
     }
 
-    public UserInfo getUserInfo(int id){
+    public UserInfo getUserInfo(int id) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         UserInfo userInfo = null;
 
         try {
-            String sql="SELECT name, email FROM User where idPlayer=?";
+            String sql = "SELECT name, email FROM User where idPlayer=?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 //found
                 userInfo = new UserInfo();
                 userInfo.name = resultSet.getString(1);
                 userInfo.email = resultSet.getString(2);
                 System.out.println("found " + resultSet.getString(1));
-            }
-            else{
+            } else {
                 //not found
                 System.out.println("nope");
             }
@@ -150,13 +148,13 @@ public class DataBase {
         return userInfo;
     }
 
-    public boolean updateUser(int id, UserInfo userInfo){
+    public boolean updateUser(int id, UserInfo userInfo) {
         boolean result = false;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
-            String sql="UPDATE User SET name = ?, password = ?, email = ?  WHERE idPlayer = ?;";
+            String sql = "UPDATE User SET name = ?, password = ?, email = ?  WHERE idPlayer = ?;";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, userInfo.name);
             preparedStatement.setString(2, userInfo.password);
@@ -187,7 +185,7 @@ public class DataBase {
         return result;
     }
 
-    public ArrayList<ColumnDescription> getStats(){
+    public ArrayList<ColumnDescription> getStats() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
@@ -195,10 +193,10 @@ public class DataBase {
         ArrayList<Integer> score = new ArrayList<Integer>();
         ArrayList<ColumnDescription> stats = new ArrayList<ColumnDescription>();
         try {
-            String sql="SELECT name, score FROM User";
+            String sql = "SELECT name, score FROM User";
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
                 name.add(resultSet.getString(1));
                 score.add(resultSet.getInt(2));
@@ -229,7 +227,7 @@ public class DataBase {
     }
 
     public ArrayList<ColumnDescription> getBoughtItemsInCategory(int idCategory) throws DataBaseExepction {
-        if(idCategory>2 || idCategory<1)
+        if (idCategory > 2 || idCategory < 1)
             throw new DataBaseExepction();
 
         PreparedStatement preparedStatement = null;
@@ -239,7 +237,7 @@ public class DataBase {
         ArrayList<String> itemName = new ArrayList<String>();
         ArrayList<ColumnDescription> transcation = new ArrayList<ColumnDescription>();
         try {
-            String sql="SELECT User.name, Item.Name\n" +
+            String sql = "SELECT User.name, Item.Name\n" +
                     "FROM User\n" +
                     "    JOIN Transaction ON (User.idPlayer = Transaction.idPlayer)\n" +
                     "    JOIN Item ON (Transaction.idItem = Item.idItem)\n" +
@@ -249,7 +247,7 @@ public class DataBase {
             preparedStatement.setInt(1, idCategory);
 
             resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
                 userName.add(resultSet.getString(1));
                 itemName.add(resultSet.getString(2));
@@ -290,7 +288,7 @@ public class DataBase {
         ArrayList<String> timestamp = new ArrayList<String>();
         ArrayList<ColumnDescription> transcation = new ArrayList<ColumnDescription>();
         try {
-            String sql="SELECT User.name, Item.Name, Transaction.Data\n" +
+            String sql = "SELECT User.name, Item.Name, Transaction.Data\n" +
                     "FROM User\n" +
                     "   JOIN Transaction ON (User.idPlayer = Transaction.idPlayer)\n" +
                     "   JOIN Item ON (Transaction.idItem = Item.idItem)\n" +
@@ -303,7 +301,7 @@ public class DataBase {
             preparedStatement.setString(2, end);
 
             resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
 
                 userName.add(resultSet.getString(1));
                 itemName.add(resultSet.getString(2));
@@ -335,7 +333,7 @@ public class DataBase {
         return transcation;
     }
 
-    public ArrayList<ColumnDescription> getAmountOfTransactions() throws DataBaseExepction{
+    public ArrayList<ColumnDescription> getAmountOfTransactions() throws DataBaseExepction {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
@@ -343,13 +341,13 @@ public class DataBase {
         ArrayList<Integer> amount = new ArrayList<Integer>();
         ArrayList<ColumnDescription> amountOfTransactions = new ArrayList<ColumnDescription>();
         try {
-            String sql="SELECT Item.name, count(Transaction.idItem) as amount\n" +
+            String sql = "SELECT Item.name, count(Transaction.idItem) as amount\n" +
                     "FROM Transaction \n" +
                     "\tJOIN Item ON (Transaction.idItem = Item.idItem)\n" +
                     "GROUP BY Transaction.idItem;";
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 name.add(resultSet.getString(1));
                 amount.add(resultSet.getInt(2));
             }
@@ -378,10 +376,10 @@ public class DataBase {
         return amountOfTransactions;
     }
 
-    public void dispose(){
+    public void dispose() {
         try {
             if (connection != null) {
-                    connection.close();
+                connection.close();
             }
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(DataBase.class.getName());

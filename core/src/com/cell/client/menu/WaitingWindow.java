@@ -8,15 +8,15 @@ import com.kotcrab.vis.ui.widget.VisWindow;
  * Created by kongo on 07.04.16.
  */
 public class WaitingWindow extends VisWindow {
+    private static final String waitingText = "Waiting";
     private final MenuScreen menuScreen;
+    Label waitingLabel;
     private float delay = 0.4f;
     private float time = 0.0f;
     private float maxTime = 10.0f;
     private float roundTime = 0.0f;
-    private static final String waitingText = "Waiting";
-    Label waitingLabel;
 
-    public WaitingWindow (MenuScreen menuScreen) {
+    public WaitingWindow(MenuScreen menuScreen) {
         super(waitingText);
         this.menuScreen = menuScreen;
 
@@ -34,24 +34,24 @@ public class WaitingWindow extends VisWindow {
         setSize(getWidth() + 60, getHeight());
     }
 
-    public void update(float delta){
-        roundTime+=delta;
-        if (roundTime >= delay){
+    public void update(float delta) {
+        roundTime += delta;
+        if (roundTime >= delay) {
             time += roundTime;
-            if(time > maxTime) {
+            if (time > maxTime) {
                 close();
-                menuScreen.createDailog("Warning","Conecction problems");
+                menuScreen.createDailog("Warning", "Conecction problems");
             }
 
             roundTime = 0;
             waitingLabel.setText(waitingLabel.getText() + ".");
-            if(waitingLabel.getText().length() > 10)
+            if (waitingLabel.getText().length() > 10)
                 waitingLabel.setText(waitingText);
         }
     }
 
     @Override
-    protected void close () {
+    protected void close() {
         super.close();
         menuScreen.openCurrentMainWindow();
     }

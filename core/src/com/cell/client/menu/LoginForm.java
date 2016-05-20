@@ -1,12 +1,10 @@
 package com.cell.client.menu;
 
-import com.cell.client.GameClient;
-import com.kotcrab.vis.ui.widget.VisWindow;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.cell.client.GameClient;
 import com.kotcrab.vis.ui.util.TableUtils;
-import com.kotcrab.vis.ui.util.dialog.Dialogs;
 import com.kotcrab.vis.ui.util.form.SimpleFormValidator;
 import com.kotcrab.vis.ui.widget.*;
 
@@ -17,7 +15,7 @@ import com.kotcrab.vis.ui.widget.*;
 public class LoginForm extends VisWindow {
     private final MenuScreen menuScreen;
 
-    public LoginForm (final MenuScreen menuScreen, final GameClient gameClient) {
+    public LoginForm(final MenuScreen menuScreen, final GameClient gameClient) {
         super("Login");
         this.menuScreen = menuScreen;
 
@@ -60,7 +58,7 @@ public class LoginForm extends VisWindow {
 
         acceptButton.addListener(new ChangeListener() {
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) {
                 gameClient.login(nameField.getText(), passwordField.getText());
                 menuScreen.openWaitingWindow();
             }
@@ -72,7 +70,7 @@ public class LoginForm extends VisWindow {
     }
 
     @Override
-    protected void close () {
+    protected void close() {
         super.close();
         menuScreen.openMainMenu();
     }

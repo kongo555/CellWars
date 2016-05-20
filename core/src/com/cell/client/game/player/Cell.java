@@ -23,12 +23,12 @@ public class Cell extends InputAdapter {
         speed = 100;
     }
 
-    public void applyInput(InputPackage input){
+    public void applyInput(InputPackage input) {
         x += input.pressTimeHorizontal * this.speed;
         y += input.pressTimeVertical * this.speed;
     }
 
-    public void render(ShapeRenderer shapeRenderer){
+    public void render(ShapeRenderer shapeRenderer) {
         switch (color) {
             case 0:
                 shapeRenderer.setColor(Color.ROYAL);
@@ -47,7 +47,7 @@ public class Cell extends InputAdapter {
         shapeRenderer.circle(x, y, size);
     }
 
-    public String toString(){
+    public String toString() {
         return x + " " + y;
     }
 

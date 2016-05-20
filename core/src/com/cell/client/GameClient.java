@@ -1,9 +1,9 @@
 package com.cell.client;
 
+import com.cell.client.game.chat.ChatController;
 import com.cell.client.game.player.Cell;
 import com.cell.client.game.player.PlayerInput;
 import com.cell.network.Network;
-import com.cell.client.game.chat.ChatController;
 import com.cell.network.chat.ChatMessage;
 import com.cell.network.game.*;
 import com.cell.network.login.LoginFailure;
@@ -33,7 +33,7 @@ public class GameClient {
 
     private boolean server_reconciliation = true;
 
-    public GameClient (final Main main, final Client client, final ChatController chatController) {
+    public GameClient(final Main main, final Client client, final ChatController chatController) {
         this.main = main;
         this.client = client;
         this.chatController = chatController;
@@ -42,16 +42,16 @@ public class GameClient {
         Network.register(this.client);
 
         this.client.addListener(new Listener() {
-            public void connected (Connection connection) {
+            public void connected(Connection connection) {
             }
 
-            public void received (Connection connection, Object object) {
-                if(object instanceof WorldState){
+            public void received(Connection connection, Object object) {
+                if (object instanceof WorldState) {
                     main.getGameScreen().getEntities().clear();
 
-                    proccesPlayerState(((WorldState)object).getPlayerState());
+                    proccesPlayerState(((WorldState) object).getPlayerState());
 
-                    EntityState[] states = ((WorldState)object).getStates();
+                    EntityState[] states = ((WorldState) object).getStates();
                     for (int i = 0; i < states.length; i++) {
                         EntityState state = states[i];
                         main.getGameScreen().getEntities().add(new Cell(state.x, state.y, state.size, state.color));
@@ -59,13 +59,13 @@ public class GameClient {
                 }
 
                 if (object instanceof ChatMessage) {
-                    ChatMessage chatMessage = (ChatMessage)object;
+                    ChatMessage chatMessage = (ChatMessage) object;
                     chatController.addMessage(chatMessage.text);
                     return;
                 }
 
-                if(object instanceof WorldInfo){
-                    WorldInfo worldInfo = (WorldInfo)object;
+                if (object instanceof WorldInfo) {
+                    WorldInfo worldInfo = (WorldInfo) object;
                     main.setGameScreen(worldInfo.width, worldInfo.height);
                 }
 
@@ -80,18 +80,18 @@ public class GameClient {
                 }
 
                 if (object instanceof LoginFailure) {
-                    main.getMenuScreen().createDailog("Warning","Failed to login");
+                    main.getMenuScreen().createDailog("Warning", "Failed to login");
                     return;
                 }
 
                 if (object instanceof RegisterSuccessful) {
                     main.getMenuScreen().openMainMenu();
-                    main.getMenuScreen().createDailog("Successful","Your account has been created");
+                    main.getMenuScreen().createDailog("Successful", "Your account has been created");
                     return;
                 }
 
                 if (object instanceof RegisterFailure) {
-                    main.getMenuScreen().createDailog("Warning","Failed to register");
+                    main.getMenuScreen().createDailog("Warning", "Failed to register");
                     return;
                 }
 
@@ -102,19 +102,19 @@ public class GameClient {
 
                 if (object instanceof EditUserSuccessful) {
                     main.getMenuScreen().openUserWindow();
-                    main.getMenuScreen().createDailog("Successful","Edit successful");
+                    main.getMenuScreen().createDailog("Successful", "Edit successful");
                     return;
                 }
             }
 
-            public void disconnected (Connection connection) {
+            public void disconnected(Connection connection) {
                 client.sendTCP(new RemovePlayer());
             }
         });
 
     }
 
-    public void proccesPlayerState(PlayerState playerState){
+    public void proccesPlayerState(PlayerState playerState) {
         // Set the position sent by the server.
         Cell cell = main.getGameScreen().getCell();
         cell.setX(playerState.x);
@@ -144,7 +144,7 @@ public class GameClient {
         }
     }
 
-    public void login(final String name, final String password){
+    public void login(final String name, final String password) {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.name = name;
         //loginRequest.password = password;
@@ -156,7 +156,7 @@ public class GameClient {
         client.sendTCP(loginRequest);
     }
 
-    public void register(final String name, final String password, final String email){
+    public void register(final String name, final String password, final String email) {
         RegisterRequest registerRequest = new RegisterRequest();
         registerRequest.name = name;
         try {
@@ -169,11 +169,11 @@ public class GameClient {
         client.sendTCP(registerRequest);
     }
 
-    public void sendUserInfoRequest(){
+    public void sendUserInfoRequest() {
         client.sendTCP(new UserInfoRequest());
     }
 
-    public void sendUpadateUser(final String name, final String password, final String email){
+    public void sendUpadateUser(final String name, final String password, final String email) {
         UserInfo userInfo = new UserInfo();
         userInfo.name = name;
         try {
@@ -186,17 +186,17 @@ public class GameClient {
         client.sendTCP(userInfo);
     }
 
-    public void enterRoom(){
+    public void enterRoom() {
         client.sendTCP(new AddPlayer());
     }
 
-    public void sendInputPackage(InputPackage inputPackage){
+    public void sendInputPackage(InputPackage inputPackage) {
         client.sendTCP(inputPackage);
     }
 
-    public void connect(){
+    public void connect() {
         new Thread("Connect") {
-            public void run () {
+            public void run() {
                 try {
                     client.connect(5000, "localhost", Network.port);
                 } catch (IOException e) {
@@ -207,7 +207,7 @@ public class GameClient {
         }.start();
     }
 
-    public void dispose(){
+    public void dispose() {
         client.close();
     }
 
