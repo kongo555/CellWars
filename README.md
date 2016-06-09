@@ -1,6 +1,6 @@
 CellWars
 =============
-Clone of agro.io in java.
+Clone of agar.io in java.
 
 Technology used: 
 * LibGDX (game-development application framework).
